@@ -77,12 +77,13 @@ public class MainActivity extends AppCompatActivity {
         //api client
         Retrofit retrofit = new Retrofit
                 .Builder()
-                .baseUrl("https://api.dingi.live/maps/v2/")
+                .baseUrl("https://api.dingi.live/maps/v2/")   //as this is ended with a slash, no slash needed in interface class
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         Api api = retrofit.create(Api.class);
         Call<Data> call;
-        call = api.getData(""+placeSearch, "en");
+        //TODO PUT THE HEADER LIKE THIS
+        call = api.getData("ru7KPUg2Wj17lRGdT1mTn9fCbYYSI2Ojaop8iwB5",""+placeSearch, "en");
 
         call.enqueue(new Callback<Data>() {
             @Override
