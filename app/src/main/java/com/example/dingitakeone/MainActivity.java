@@ -26,6 +26,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewError;
     private AutoCompleteTextView autoTextView;
     private String placeSearch;
+    private Api apiInterface;
+
+
+    private String token = "ru7KPUg2Wj17lRGdT1mTn9fCbYYSI2Ojaop8iwB5";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +80,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onCall() {
-        //api client
-        Retrofit retrofit = new Retrofit
-                .Builder()
-                .baseUrl("https://api.dingi.live/maps/v2/")   //as this is ended with a slash, no slash needed in interface class
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Api api = retrofit.create(Api.class);
-        Call<Data> call;
-        //TODO PUT THE HEADER LIKE THIS
-        call = api.getData("ru7KPUg2Wj17lRGdT1mTn9fCbYYSI2Ojaop8iwB5",""+placeSearch, "en");
+//        //api client
+//        Retrofit retrofit = new Retrofit
+//                .Builder()
+//                .baseUrl("https://api.dingi.live/maps/v2/")   //as this is ended with a slash, no slash needed in interface class
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+
+
+        apiInterface = ApiInstance.getApiClient().create(Api.class);
+
+
+        Call<Data> call = apiInterface.getData("ru7KPUg2Wj17lRGdT1mTn9fCbYYSI2Ojaop8iwB5",""+placeSearch, "en");
+
+
+//        Api api = retrofit.create(Api.class);
+//        Call<Data> call;
+//
+//        //TODO PUT THE HEADER LIKE THIS
+//        call = api.getData("ru7KPUg2Wj17lRGdT1mTn9fCbYYSI2Ojaop8iwB5",""+placeSearch, "en");
 
         call.enqueue(new Callback<Data>() {
             @Override
@@ -99,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 placeList = new ArrayList<>();
                 info = datas.getResult();
 
-                for(int i=0; 1<info.size(); i++){
+                for(int i=0; i<info.size(); i++){
                     PlaceItem placeItem = new PlaceItem(
                             ""+info.get(i).getName(),
                             ""+datas.getAddress()
