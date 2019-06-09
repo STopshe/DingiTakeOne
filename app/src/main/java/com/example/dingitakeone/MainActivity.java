@@ -74,18 +74,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onCall() {
-        //api client
-        Retrofit retrofit = new Retrofit
-                .Builder()
-                .baseUrl("https://api.dingi.live/maps/v2/")   //as this is ended with a slash, no slash needed in interface class
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        Api api = retrofit.create(Api.class);
-        Call<Data> call;
-        //TODO PUT THE HEADER LIKE THIS
-        call = api.getData("ru7KPUg2Wj17lRGdT1mTn9fCbYYSI2Ojaop8iwB5",""+placeSearch, "en");
 
-        call.enqueue(new Callback<Data>() {
+
+        RestClient.getClient(MainActivity.this).call("ru7KPUg2Wj17lRGdT1mTn9fCbYYSI2Ojaop8iwB5",""+placeSearch, "en").enqueue(new Callback<Data>() {
             @Override
             public void onResponse(Call<Data> call, Response<Data> response) {
 
